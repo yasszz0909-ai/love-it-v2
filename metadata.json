@@ -1,0 +1,6 @@
+{
+  "name": "Our Little Story",
+  "description": "A romantic personal memory album and relationship timeline for couples.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

@@ -1,0 +1,699 @@
+/* ==========================================================================
+   ROMANTIC SKY THEME - PESAN CINTA UNTUK VIIA (pesan.css)
+   ========================================================================== */
+
+:root {
+  --sky-gradient: linear-gradient(180deg, #7ec8f8 0%, #a7dbfb 40%, #d8f0ff 75%, #f4faff 100%);
+  --sky-card-bg: rgba(255, 255, 255, 0.82);
+  --sky-card-border: rgba(255, 255, 255, 0.95);
+  --sky-card-shadow: 0 16px 40px rgba(37, 99, 235, 0.12), 0 4px 12px rgba(0, 0, 0, 0.04);
+  --sky-text-main: #1e3a5f;
+  --sky-text-muted: #52759f;
+  --sky-primary: #0284c7;
+  --sky-primary-hover: #0369a1;
+  --sky-heart-red: #f43f5e;
+  --sky-heart-glow: rgba(244, 63, 94, 0.45);
+  --discord-blurple: #5865F2;
+  --discord-hover: #4752c4;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  min-height: 100vh;
+  font-family: 'Quicksand', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  background: var(--sky-gradient);
+  color: var(--sky-text-main);
+  overflow-x: hidden;
+  position: relative;
+  line-height: 1.6;
+}
+
+/* Background canvas for floating hearts & dreamy clouds */
+#sky-canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Animated subtle clouds layer */
+.cloud-layer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1;
+  background: 
+    radial-gradient(circle at 15% 20%, rgba(255, 255, 255, 0.45) 0%, transparent 40%),
+    radial-gradient(circle at 85% 35%, rgba(255, 255, 255, 0.35) 0%, transparent 45%),
+    radial-gradient(circle at 50% 80%, rgba(255, 255, 255, 0.5) 0%, transparent 50%);
+  animation: cloudFloat 24s ease-in-out infinite alternate;
+}
+
+@keyframes cloudFloat {
+  0% { transform: translateY(0px) scale(1); }
+  50% { transform: translateY(-12px) scale(1.02); }
+  100% { transform: translateY(8px) scale(0.98); }
+}
+
+/* Navigation Header */
+.sky-header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 24px;
+  background: rgba(255, 255, 255, 0.65);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.8);
+  box-shadow: 0 4px 16px rgba(14, 116, 144, 0.06);
+}
+
+.back-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--sky-text-main);
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.95rem;
+  padding: 8px 16px;
+  border-radius: 9999px;
+  background: rgba(255, 255, 255, 0.85);
+  border: 1px solid rgba(255, 255, 255, 0.95);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  transition: all 0.25s ease;
+}
+
+.back-btn:hover {
+  transform: translateX(-3px);
+  background: #ffffff;
+  color: var(--sky-primary);
+  box-shadow: 0 4px 12px rgba(2, 132, 199, 0.15);
+}
+
+.audio-control-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: #ffffff;
+  padding: 6px 14px;
+  border-radius: 9999px;
+  border: 1px solid rgba(2, 132, 199, 0.2);
+  box-shadow: 0 2px 10px rgba(2, 132, 199, 0.1);
+  cursor: pointer;
+  user-select: none;
+  transition: all 0.25s ease;
+}
+
+.audio-control-pill:hover {
+  border-color: var(--sky-primary);
+  transform: scale(1.02);
+}
+
+.audio-wave-icon {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  height: 16px;
+}
+
+.audio-wave-bar {
+  width: 3px;
+  background-color: var(--sky-primary);
+  border-radius: 2px;
+  animation: soundBar 1.2s ease-in-out infinite alternate;
+}
+.audio-wave-bar:nth-child(1) { height: 8px; animation-delay: 0.1s; }
+.audio-wave-bar:nth-child(2) { height: 16px; animation-delay: 0.3s; }
+.audio-wave-bar:nth-child(3) { height: 10px; animation-delay: 0.5s; }
+
+.audio-control-pill.paused .audio-wave-bar {
+  animation: none;
+  height: 4px;
+  background-color: var(--sky-text-muted);
+}
+
+.audio-label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--sky-text-main);
+}
+
+/* Main Container */
+.page-container {
+  position: relative;
+  z-index: 10;
+  max-width: 680px;
+  margin: 0 auto;
+  padding: 32px 20px 80px;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+/* Header Banner */
+.sky-intro {
+  text-align: center;
+  margin-bottom: 8px;
+}
+
+.sky-title {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 2.2rem;
+  font-weight: 700;
+  color: #0c4a6e;
+  letter-spacing: -0.5px;
+  margin-bottom: 8px;
+  text-shadow: 0 2px 8px rgba(255, 255, 255, 0.8);
+}
+
+.sky-subtitle {
+  font-size: 0.98rem;
+  color: #0369a1;
+  font-weight: 500;
+}
+
+/* Cascading Step Card */
+.step-card {
+  background: var(--sky-card-bg);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1.5px solid var(--sky-card-border);
+  border-radius: 24px;
+  padding: 28px 28px;
+  box-shadow: var(--sky-card-shadow);
+  position: relative;
+  transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Step Cascading Display State */
+.step-hidden {
+  display: none;
+  opacity: 0;
+  transform: translateY(24px);
+}
+
+.step-visible {
+  display: block;
+  animation: revealStep 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes revealStep {
+  0% {
+    opacity: 0;
+    transform: translateY(28px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Step 1 Styles */
+.step-1-content {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.step-tag {
+  align-self: flex-start;
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: #0284c7;
+  background: rgba(2, 132, 199, 0.1);
+  padding: 4px 12px;
+  border-radius: 9999px;
+}
+
+.step-1-prompt {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 1.45rem;
+  font-style: italic;
+  font-weight: 600;
+  color: #0f172a;
+  line-height: 1.5;
+}
+
+.btn-row-right {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 10px;
+}
+
+/* Next Buttons */
+.btn-sky-next {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%);
+  color: #ffffff;
+  border: none;
+  border-radius: 9999px;
+  padding: 12px 26px;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 6px 18px rgba(2, 132, 199, 0.35);
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.btn-sky-next:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(2, 132, 199, 0.45);
+  background: linear-gradient(135deg, #0369a1 0%, #075985 100%);
+}
+
+.btn-sky-next:active {
+  transform: translateY(0);
+}
+
+.btn-sky-next svg {
+  transition: transform 0.2s ease;
+}
+.btn-sky-next:hover svg {
+  transform: translateX(4px);
+}
+
+/* Step 2 Letter Styles */
+.letter-box {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.letter-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px dashed rgba(2, 132, 199, 0.25);
+  padding-bottom: 12px;
+}
+
+.letter-title {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: #0369a1;
+}
+
+.letter-body {
+  font-size: 1.02rem;
+  line-height: 1.85;
+  color: #1e293b;
+  white-space: pre-line;
+  font-weight: 500;
+  background: rgba(255, 255, 255, 0.65);
+  padding: 22px 20px;
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.9);
+  box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.02);
+}
+
+/* Step 3 Styles */
+.step-3-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 24px;
+}
+
+/* Looping Glowing ❤️ Heart Animation */
+.heart-loop-container {
+  position: relative;
+  width: 140px;
+  height: 140px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 10px auto;
+}
+
+.heart-glow-ring {
+  position: absolute;
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(244, 63, 94, 0.35) 0%, rgba(244, 63, 94, 0.05) 60%, transparent 80%);
+  animation: glowPulse 2s ease-in-out infinite;
+}
+
+@keyframes glowPulse {
+  0% { transform: scale(0.9); opacity: 0.6; }
+  50% { transform: scale(1.35); opacity: 1; }
+  100% { transform: scale(0.9); opacity: 0.6; }
+}
+
+.heart-svg-loop {
+  width: 80px;
+  height: 80px;
+  fill: #f43f5e;
+  filter: drop-shadow(0 0 16px rgba(244, 63, 94, 0.7));
+  animation: heartbeat 1.4s ease-in-out infinite;
+  transform-origin: center;
+}
+
+@keyframes heartbeat {
+  0% { transform: scale(1); }
+  14% { transform: scale(1.22); }
+  28% { transform: scale(1); }
+  42% { transform: scale(1.18); }
+  70% { transform: scale(1); }
+  100% { transform: scale(1); }
+}
+
+.heart-tagline {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #0c4a6e;
+}
+
+/* Reply Trigger Button */
+.btn-reply-trigger {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: linear-gradient(135deg, #f43f5e 0%, #e11d48 100%);
+  color: #ffffff;
+  border: none;
+  border-radius: 9999px;
+  padding: 14px 34px;
+  font-size: 1.05rem;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 8px 24px rgba(244, 63, 94, 0.35);
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.btn-reply-trigger:hover {
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 10px 28px rgba(244, 63, 94, 0.45);
+}
+
+/* Reply Form Container */
+.reply-form-wrapper {
+  width: 100%;
+  display: none;
+  flex-direction: column;
+  gap: 18px;
+  text-align: left;
+  animation: fadeIn 0.4s ease forwards;
+  background: rgba(255, 255, 255, 0.7);
+  padding: 24px;
+  border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.95);
+  box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.02);
+}
+
+.reply-form-wrapper.active {
+  display: flex;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.form-label {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: #0c4a6e;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.form-input,
+.form-textarea {
+  width: 100%;
+  font-family: inherit;
+  font-size: 0.98rem;
+  padding: 12px 16px;
+  border-radius: 12px;
+  border: 1.5px solid #bae6fd;
+  background: #ffffff;
+  color: #0f172a;
+  outline: none;
+  transition: all 0.2s ease;
+}
+
+.form-input:focus,
+.form-textarea:focus {
+  border-color: #0284c7;
+  box-shadow: 0 0 0 3px rgba(2, 132, 199, 0.18);
+}
+
+.form-textarea {
+  min-height: 100px;
+  resize: vertical;
+  line-height: 1.6;
+}
+
+.form-textarea.input-error {
+  border-color: #f43f5e !important;
+  box-shadow: 0 0 0 3.5px rgba(244, 63, 94, 0.25) !important;
+  animation: shake 0.4s ease-in-out;
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  20%, 60% { transform: translateX(-6px); }
+  40%, 80% { transform: translateX(6px); }
+}
+
+.btn-selesai {
+  align-self: center;
+  margin-top: 8px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%);
+  color: #ffffff;
+  border: none;
+  border-radius: 9999px;
+  padding: 12px 32px;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 4px 16px rgba(2, 132, 199, 0.3);
+  transition: all 0.25s ease;
+}
+
+.btn-selesai:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(2, 132, 199, 0.4);
+}
+
+/* Completed Reply Preview & Actions */
+.reply-result-wrapper {
+  width: 100%;
+  display: none;
+  flex-direction: column;
+  gap: 20px;
+  text-align: left;
+  animation: fadeIn 0.4s ease forwards;
+}
+
+.reply-result-wrapper.active {
+  display: flex;
+}
+
+.preview-box {
+  background: #ffffff;
+  padding: 20px 22px;
+  border-radius: 16px;
+  border: 1.5px solid #e0f2fe;
+  box-shadow: 0 4px 14px rgba(2, 132, 199, 0.08);
+}
+
+.preview-title {
+  font-size: 0.82rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: #0284c7;
+  margin-bottom: 12px;
+}
+
+.preview-content {
+  font-size: 1rem;
+  line-height: 1.7;
+  color: #1e293b;
+  white-space: pre-wrap;
+  font-style: italic;
+  border-left: 3px solid #0284c7;
+  padding-left: 14px;
+}
+
+.action-buttons-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  justify-content: center;
+}
+
+/* Copy Instruction Card */
+.copy-instruction-card {
+  background: rgba(240, 249, 255, 0.85);
+  border: 1.5px dashed #7dd3fc;
+  border-radius: 16px;
+  padding: 16px 20px;
+  box-shadow: 0 2px 10px rgba(2, 132, 199, 0.05);
+}
+
+.instruction-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.instruction-icon {
+  font-size: 1.15rem;
+}
+
+.instruction-title {
+  font-size: 0.92rem;
+  font-weight: 700;
+  color: #0369a1;
+}
+
+.instruction-steps {
+  margin: 0;
+  padding-left: 22px;
+  color: #334155;
+  font-size: 0.92rem;
+  line-height: 1.6;
+}
+
+.instruction-steps li {
+  margin-bottom: 4px;
+}
+
+.instruction-steps strong {
+  color: #0c4a6e;
+}
+
+/* Copy Button */
+.btn-copy-msg {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%);
+  color: #ffffff;
+  border: none;
+  border-radius: 9999px;
+  padding: 13px 34px;
+  font-size: 1.02rem;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 6px 20px rgba(2, 132, 199, 0.35);
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.btn-copy-msg:hover {
+  background: linear-gradient(135deg, #0369a1 0%, #075985 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(2, 132, 199, 0.45);
+}
+
+.btn-copy-msg:active {
+  transform: translateY(0);
+}
+
+.btn-edit-again {
+  align-self: center;
+  background: transparent;
+  border: none;
+  color: var(--sky-text-muted);
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: underline;
+  padding: 4px 8px;
+}
+
+.btn-edit-again:hover {
+  color: var(--sky-primary);
+}
+
+/* Toast Notification */
+.sky-toast {
+  position: fixed;
+  bottom: 28px;
+  left: 50%;
+  transform: translateX(-50%) translateY(60px);
+  background: rgba(15, 23, 42, 0.9);
+  color: #ffffff;
+  padding: 12px 24px;
+  border-radius: 9999px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+  z-index: 999;
+  opacity: 0;
+  pointer-events: none;
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.sky-toast.show {
+  transform: translateX(-50%) translateY(0);
+  opacity: 1;
+}
+
+/* Responsive adjustments */
+@media (max-width: 600px) {
+  .sky-header {
+    padding: 12px 16px;
+  }
+  .page-container {
+    padding: 20px 14px 60px;
+    gap: 22px;
+  }
+  .sky-title {
+    font-size: 1.8rem;
+  }
+  .step-card {
+    padding: 22px 18px;
+    border-radius: 18px;
+  }
+  .step-1-prompt {
+    font-size: 1.25rem;
+  }
+  .letter-body {
+    font-size: 0.95rem;
+    padding: 18px 14px;
+  }
+  .action-buttons-row {
+    flex-direction: column;
+    width: 100%;
+  }
+  .btn-copy-msg,
+  .btn-send-discord {
+    width: 100%;
+    justify-content: center;
+  }
+}

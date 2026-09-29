@@ -1,0 +1,54 @@
+{
+  "entities": {
+    "loveMessage": {
+      "title": "Love Message",
+      "description": "Heartfelt love letters and romantic messages shared between I'am and Via.",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier of the message."
+        },
+        "sender": {
+          "type": "string",
+          "description": "The author of the message (e.g. I'am or Via).",
+          "minLength": 1,
+          "maxLength": 100
+        },
+        "recipient": {
+          "type": "string",
+          "description": "The intended recipient (e.g. Via or I'am).",
+          "minLength": 1,
+          "maxLength": 100
+        },
+        "content": {
+          "type": "string",
+          "description": "The full text of the love message.",
+          "minLength": 1,
+          "maxLength": 5000
+        },
+        "category": {
+          "type": "string",
+          "description": "Category or mood tag of the message (e.g., cinta, rindu, semangat).",
+          "maxLength": 50
+        },
+        "singkat": {
+          "type": "string",
+          "description": "Short sweet closing romantic message (e.g. I Love You too❤️).",
+          "maxLength": 200
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "ISO 8601 timestamp string when the message was created."
+        }
+      },
+      "required": ["sender", "content", "createdAt"]
+    }
+  },
+  "firestore": {
+    "/messages/{messageId}": {
+      "schema": "loveMessage",
+      "description": "Collection of love messages displayed on the website and shared permanently."
+    }
+  }
+}

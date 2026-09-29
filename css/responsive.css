@@ -1,0 +1,396 @@
+/* ==========================================================================
+   OUR LITTLE STORY - Responsive Stylesheet
+   Tailored for 360px, 390px, 430px, 768px, 1024px, 1440px+
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   Desktop Baseline (1024px - 1440px)
+   -------------------------------------------------------------------------- */
+@media (min-width: 1024px) {
+  .gallery-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Tablets & Medium Screens (max-width: 1023px)
+   -------------------------------------------------------------------------- */
+@media (max-width: 1023px) {
+  .section-container {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+
+  .gallery-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+  }
+
+  .player-wrapper {
+    grid-template-columns: 1fr;
+    gap: 1.75rem;
+  }
+
+  .counter-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.75rem;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Mobile Navigation & Small Tablets (max-width: 768px)
+   -------------------------------------------------------------------------- */
+@media (max-width: 768px) {
+  /* Header & Navigation Contract */
+  .desktop-nav {
+    display: none;
+  }
+
+  .hamburger-btn {
+    display: flex;
+  }
+
+  .nav-container {
+    padding: 1rem 1.25rem;
+  }
+
+  /* Fullscreen Slide-Down Mobile Menu */
+  .mobile-nav {
+    display: block;
+    position: fixed;
+    top: 60px;
+    left: 0;
+    width: 100%;
+    height: calc(100vh - 60px);
+    background-color: rgba(252, 249, 250, 0.98);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    padding: 2.5rem 1.75rem;
+    transform: translateY(-100%);
+    opacity: 0;
+    visibility: hidden;
+    transition: transform 0.35s var(--ease-smooth), opacity 0.3s ease, visibility 0.35s;
+    overflow-y: auto;
+    z-index: 998;
+  }
+
+  .mobile-nav.nav-open {
+    transform: translateY(0);
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .mobile-nav-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    align-items: center;
+    text-align: center;
+  }
+
+  .mobile-nav-list .nav-link {
+    font-family: var(--font-serif);
+    font-size: 1.45rem;
+    font-weight: 500;
+    color: var(--color-text-main);
+    display: inline-block;
+    padding: 0.6rem 1.5rem;
+    min-height: 48px;
+    line-height: 48px;
+  }
+
+  /* Hero Section */
+  .hero-section {
+    padding-top: 5.5rem;
+    padding-bottom: 3.5rem;
+  }
+
+  .hero-container {
+    padding: 0 1.25rem;
+  }
+
+  .hero-header-text {
+    margin-bottom: 2rem;
+  }
+
+  .hero-image-wrapper {
+    margin-bottom: 2rem;
+    border-radius: 14px;
+  }
+
+  .hero-counter-card {
+    padding: 1.75rem 1.25rem;
+    border-radius: 16px;
+  }
+
+  .counter-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.5rem;
+  }
+
+  .counter-slot {
+    padding: 0.75rem 0.25rem;
+  }
+
+  .counter-digit {
+    font-size: 1.45rem;
+  }
+
+  .counter-unit {
+    font-size: 0.6875rem;
+  }
+
+  /* Timeline Single-Sided Mobile Layout */
+  .timeline-spine {
+    left: 20px;
+    transform: none;
+  }
+
+  .timeline-nodes-wrap {
+    gap: 2.5rem;
+  }
+
+  .timeline-node {
+    justify-content: flex-start !important;
+    padding-left: 50px;
+  }
+
+  .timeline-dot {
+    left: 20px;
+    top: 1.75rem;
+  }
+
+  .timeline-card {
+    width: 100%;
+    padding: 1.25rem;
+  }
+
+  .timeline-title {
+    font-size: 1.2rem;
+  }
+
+  /* Music Player Mobile Layout */
+  .player-main-card {
+    padding: 1.75rem 1.25rem;
+    border-radius: 18px;
+  }
+
+  .player-top {
+    flex-direction: column;
+    text-align: center;
+    gap: 1.25rem;
+  }
+
+  .player-cover-wrap {
+    width: 130px;
+    height: 130px;
+  }
+
+  .player-visualizer {
+    justify-content: center;
+    margin-top: 0.5rem;
+  }
+
+  .player-controls-row {
+    flex-wrap: wrap;
+    gap: 1rem;
+    justify-content: center;
+  }
+
+  .player-volume-group {
+    width: 100%;
+    justify-content: center;
+    margin-top: 0.5rem;
+  }
+
+  .player-volume-slider {
+    width: 120px;
+  }
+
+  /* Gallery Grid */
+  .gallery-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .special-dates-grid {
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+  }
+
+  /* Birthdays Couple Grid Mobile */
+  .birthdays-couple-wrapper {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .birthdays-love-connector {
+    flex-direction: row;
+    gap: 0.75rem;
+    padding: 0.5rem 0;
+  }
+
+  .connector-line {
+    width: 60px;
+    height: 2px;
+    background: linear-gradient(90deg, rgba(37, 99, 235, 0.35), rgba(225, 29, 72, 0.35));
+  }
+
+  /* Lightbox Navigation Buttons on Mobile */
+  .lightbox-nav-btn {
+    width: 40px;
+    height: 40px;
+    font-size: 1.4rem;
+  }
+
+  .lightbox-nav-btn.prev-btn { left: 0.5rem; }
+  .lightbox-nav-btn.next-btn { right: 0.5rem; }
+
+  .lightbox-btn-close {
+    top: -2.75rem;
+    right: 0.25rem;
+  }
+
+  .lightbox-info {
+    padding: 1.25rem 1rem;
+  }
+
+  .lightbox-title {
+    font-size: 1.15rem;
+  }
+
+  /* Letter & Envelope */
+  .envelope-card {
+    padding: 2.5rem 1.25rem;
+  }
+
+  .envelope-label {
+    font-size: 1.5rem;
+  }
+
+  .letter-paper {
+    padding: 2.25rem 1.25rem;
+    margin-top: 1.5rem;
+  }
+
+  .letter-salutation {
+    font-size: 1.55rem;
+  }
+
+  .letter-body-prose {
+    font-size: 1.05rem;
+    line-height: 1.75;
+    gap: 1.15rem;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Small Mobile Viewports (360px - 430px)
+   -------------------------------------------------------------------------- */
+@media (max-width: 430px) {
+  html {
+    font-size: 15px;
+  }
+
+  .logo-title {
+    font-size: 1.05rem;
+    letter-spacing: 0.05em;
+  }
+
+  .hero-main-title {
+    font-size: 2.15rem;
+  }
+
+  .hero-quote {
+    font-size: 1.05rem;
+  }
+
+  .counter-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.4rem;
+  }
+
+  .counter-slot {
+    padding: 0.65rem 0.2rem;
+    border-radius: 10px;
+  }
+
+  .counter-digit {
+    font-size: 1.25rem;
+  }
+
+  .counter-unit {
+    font-size: 0.65rem;
+    letter-spacing: 0.04em;
+  }
+
+  .btn-explore {
+    padding: 0.75rem 1.5rem;
+    font-size: 0.875rem;
+  }
+
+  .gallery-filter-bar {
+    gap: 0.25rem;
+  }
+
+  .gallery-filter-btn {
+    padding: 0.45rem 0.95rem;
+    font-size: 0.75rem;
+  }
+
+  .timeline-node {
+    padding-left: 42px;
+  }
+
+  .timeline-spine {
+    left: 14px;
+  }
+
+  .timeline-dot {
+    left: 14px;
+  }
+
+  .anniv-date-display {
+    font-size: 1.85rem;
+  }
+
+  .anniv-duration-pill {
+    padding: 0.55rem 1.15rem;
+    font-size: 0.85rem;
+    line-height: 1.4;
+  }
+
+  .control-primary {
+    width: 52px;
+    height: 52px;
+  }
+
+  .control-secondary {
+    width: 38px;
+    height: 38px;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Very Narrow Mobile (360px and below)
+   -------------------------------------------------------------------------- */
+@media (max-width: 370px) {
+  .counter-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .counter-slot {
+    padding: 0.6rem 0.2rem;
+  }
+
+  .gallery-filter-bar {
+    width: 100%;
+    justify-content: space-around;
+  }
+
+  .gallery-filter-btn {
+    padding: 0.4rem 0.65rem;
+    font-size: 0.7rem;
+  }
+}

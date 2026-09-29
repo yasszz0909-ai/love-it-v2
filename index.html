@@ -1,0 +1,795 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>OUR LITTLE STORY | Romantic Digital Memory Album</title>
+  <meta name="description" content="A romantic personal memory album and relationship timeline for couples. Two people, one story, countless memories." />
+  <meta property="og:title" content="OUR LITTLE STORY | Romantic Digital Memory Album" />
+  <meta property="og:description" content="A romantic personal memory album and relationship timeline for couples." />
+  <meta property="og:image" content="assets/images/hero.jpg" />
+  <meta property="og:type" content="website" />
+
+  <!-- Google Fonts: Playfair Display & Plus Jakarta Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="css/style.css?v=7.0" />
+  <link rel="stylesheet" href="css/responsive.css?v=7.0" />
+
+  <!-- Native Browser Importmap for Firebase Web SDK (GitHub Pages & Static Compatible) -->
+  <script type="importmap">
+  {
+    "imports": {
+      "firebase/app": "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js",
+      "firebase/firestore": "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js"
+    }
+  }
+  </script>
+
+  <!-- Global Toast Definition for all modules & DOM Cleaners -->
+  <script>
+    window.showMainToast = function(message) {
+      if (!message) return;
+      let toast = document.getElementById("main-site-toast");
+      if (!toast) {
+        toast = document.createElement("div");
+        toast.id = "main-site-toast";
+        toast.className = "main-site-toast";
+        document.body.appendChild(toast);
+      }
+      toast.textContent = message;
+      toast.classList.add("visible");
+      if (window.mainToastTimer) clearTimeout(window.mainToastTimer);
+      window.mainToastTimer = setTimeout(function() {
+        if (toast) toast.classList.remove("visible");
+      }, 4000);
+    };
+    var showMainToast = window.showMainToast;
+
+    // Active DOM Sanitizer: Ensure any cached delete buttons are completely eliminated
+    function purgeDeleteButtons() {
+      document.querySelectorAll(".btn-card-delete, [title*='Hapus'], button.btn-delete-card").forEach(function(el) {
+        el.remove();
+      });
+    }
+    if (typeof MutationObserver !== "undefined") {
+      new MutationObserver(purgeDeleteButtons).observe(document.documentElement, {
+        childList: true,
+        subtree: true
+      });
+    }
+    window.addEventListener("DOMContentLoaded", purgeDeleteButtons);
+  </script>
+</head>
+<body>
+
+  <!-- =====================================
+       TOP NAVIGATION BAR
+       ===================================== -->
+  <header class="site-header">
+    <div class="nav-container">
+      <a href="#home" class="brand-logo">
+        <span class="logo-title">OUR LITTLE STORY</span>
+      </a>
+
+      <!-- Desktop Navigation Menu -->
+      <nav class="desktop-nav" id="desktop-navigation" aria-label="Main Navigation">
+        <ul class="nav-list">
+          <li><a href="#home" class="nav-link active">Home</a></li>
+          <li><a href="#gallery" class="nav-link">Gallery</a></li>
+          <li><a href="#anniversary" class="nav-link">Anniversary</a></li>
+          <li><a href="#birthdays" class="nav-link">Birthdays</a></li>
+          <li><a href="#songs" class="nav-link">Our Songs</a></li>
+          <li><a href="#letter" class="nav-link">Letter</a></li>
+          <li><a href="pesan.html" class="nav-link special-nav-link" style="color: #0284c7; font-weight: 700;">💌</a></li>
+        </ul>
+      </nav>
+
+      <!-- Mobile Hamburger Toggle -->
+      <button id="mobile-menu-toggle" class="hamburger-btn" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="site-navigation">
+        <span class="hamburger-line"></span>
+        <span class="hamburger-line"></span>
+        <span class="hamburger-line"></span>
+      </button>
+    </div>
+
+    <!-- Mobile Drawer Navigation -->
+    <nav class="mobile-nav" id="site-navigation" aria-label="Mobile Navigation">
+      <ul class="mobile-nav-list">
+        <li><a href="#home" class="nav-link">Home</a></li>
+        <li><a href="#gallery" class="nav-link">Gallery</a></li>
+        <li><a href="#anniversary" class="nav-link">Anniversary</a></li>
+        <li><a href="#birthdays" class="nav-link">Birthdays</a></li>
+        <li><a href="#songs" class="nav-link">Our Songs</a></li>
+        <li><a href="#letter" class="nav-link">Letter</a></li>
+        <li><a href="pesan.html" class="nav-link special-nav-link" style="color: #0284c7; font-weight: 700;">💌 Surat Langit</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- =====================================
+       MAIN CONTENT
+       ===================================== -->
+  <main>
+
+    <!-- SECTION 1: HOME (HERO) -->
+    <section id="home" class="hero-section">
+      <div class="hero-container">
+        
+        <div class="hero-header-text">
+          <span class="hero-eyebrow">A Digital Keepsake</span>
+          <h1 class="hero-main-title">OUR LITTLE STORY</h1>
+          <p class="hero-quote">“Two people, one story, countless memories.”</p>
+        </div>
+
+        <!-- Featured Couple Photo -->
+        <div class="hero-image-wrapper">
+          <div class="hero-image-frame">
+            <img src="assets/images/hero.jpg" alt="Our story together" class="hero-image" priority />
+            <div class="hero-image-vignette"></div>
+          </div>
+        </div>
+
+        <!-- Relationship Counter Card -->
+        <div class="hero-counter-card">
+          <div class="counter-header">
+            <span class="counter-label">Together Since</span>
+            <h2 id="together-since-date" class="counter-date">February 14, 2024</h2>
+          </div>
+
+          <div class="counter-grid">
+            <div class="counter-slot">
+              <span id="counter-years" class="counter-digit">00</span>
+              <span class="counter-unit">Years</span>
+            </div>
+            <div class="counter-slot">
+              <span id="counter-months" class="counter-digit">00</span>
+              <span class="counter-unit">Months</span>
+            </div>
+            <div class="counter-slot">
+              <span id="counter-days" class="counter-digit">00</span>
+              <span class="counter-unit">Days</span>
+            </div>
+            <div class="counter-slot">
+              <span id="counter-hours" class="counter-digit">00</span>
+              <span class="counter-unit">Hours</span>
+            </div>
+            <div class="counter-slot">
+              <span id="counter-minutes" class="counter-digit">00</span>
+              <span class="counter-unit">Minutes</span>
+            </div>
+            <div class="counter-slot">
+              <span id="counter-seconds" class="counter-digit">00</span>
+              <span class="counter-unit">Seconds</span>
+            </div>
+          </div>
+
+          <div class="hero-cta-wrap">
+            <a href="#intro" class="btn-explore">
+              <span>Explore Our Story</span>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M7 13l5 5 5-5M7 6l5 5 5-5"/>
+              </svg>
+            </a>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- INTRODUCTION SECTION -->
+    <section id="intro" class="intro-section">
+      <div class="section-container">
+        <div class="intro-editorial">
+          <span class="section-kicker">Welcome To Our World</span>
+          <h2 class="editorial-heading">Every second with you is my favorite chapter.</h2>
+          <div class="editorial-body">
+            <p>
+              This website was lovingly crafted as a quiet sanctuary for all the memories we have gathered together. From early morning conversations over steaming cups of coffee to twilight strolls along the shoreline, every photo, song, and quiet milestone here tells the story of who we are.
+            </p>
+            <p>
+              It is a celebration of our laughter, our quiet comfort, the adventures we have lived, and all the unwritten pages waiting ahead.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 2: GALLERY -->
+    <section id="gallery" class="gallery-section">
+      <div class="section-container">
+        <div class="section-heading-wrap">
+          <span class="section-kicker">Capturing Every Smile</span>
+          <h2 class="section-title">OUR MEMORIES</h2>
+          <p class="section-subtitle">Kumpulan video JJ bucin, foto couple buatan AI, dan momen random kita berdua.</p>
+        </div>
+
+        <!-- Filter Buttons -->
+        <div class="gallery-filter-bar">
+          <button class="gallery-filter-btn active" data-filter="all">SEMUA</button>
+          <button class="gallery-filter-btn" data-filter="video">🎬 JJ & VIDEO</button>
+          <button class="gallery-filter-btn" data-filter="ai">✨ FOTO AI</button>
+          <button class="gallery-filter-btn" data-filter="random">📸 RANDOM MOMEN</button>
+        </div>
+
+        <!-- Dynamic Gallery Grid (Populated via js/gallery.js) -->
+        <div id="gallery-grid" class="gallery-grid">
+          <!-- Rendered by JavaScript -->
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 3: ANNIVERSARY & SPECIAL DATES -->
+    <section id="anniversary" class="anniversary-section">
+      <div class="section-container">
+        <div class="section-heading-wrap">
+          <span class="section-kicker">Marking Our Journey</span>
+          <h2 class="section-title">OUR ANNIVERSARY</h2>
+          <p class="section-subtitle">Counting the days, honoring the promises, and celebrating our path.</p>
+        </div>
+
+        <!-- Relationship Banner -->
+        <div class="anniversary-banner">
+          <div class="anniversary-banner-inner">
+            <span class="anniv-subtitle">Together Since</span>
+            <h3 id="anniversary-since-date" class="anniv-date-display">February 14, 2024</h3>
+            <div id="relationship-duration-summary" class="anniv-duration-pill">
+              Calculating our time together...
+            </div>
+          </div>
+        </div>
+
+        <!-- Special Dates Grid Header -->
+        <div class="special-dates-header">
+          <h3 class="special-dates-title">SPECIAL DATES</h3>
+          <p class="special-dates-subtitle">The milestones that changed everything.</p>
+        </div>
+
+        <!-- Dynamic Special Dates (Populated via js/anniversary.js) -->
+        <div id="special-dates-grid" class="special-dates-grid">
+          <!-- Rendered by JavaScript -->
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION: OUR SPECIAL BIRTHDAYS -->
+    <section id="birthdays" class="birthdays-section">
+      <div class="section-container">
+        <div class="section-heading-wrap">
+          <span class="section-kicker">Celebrating Our Existence</span>
+          <h2 class="section-title">OUR SPECIAL BIRTHDAYS</h2>
+          <p class="section-subtitle">Dua tanggal istimewa saat semesta menghadirkan kita berdua untuk saling menemukan dan melengkapi.</p>
+        </div>
+
+        <div class="birthdays-couple-wrapper">
+          <!-- Card 1: I'am (Yas) -->
+          <div class="birthday-card iam-card reveal-on-scroll">
+            <div class="bday-card-header">
+              <div class="bday-role-tag tag-iam">
+                <span class="role-icon">👦🏻</span>
+                <span>PANGERAN • I'AM (YAS)</span>
+              </div>
+              <div class="bday-zodiac-tag">
+                <span>♒ Aquarius</span>
+              </div>
+            </div>
+
+            <div class="bday-avatar-wrap">
+              <div class="bday-avatar-glow iam-glow"></div>
+              <div class="bday-avatar-frame">
+                <span class="bday-avatar-emoji">👑</span>
+              </div>
+            </div>
+
+            <h3 class="bday-person-name">I'am (Yas)</h3>
+            <div class="bday-date-badge iam-badge">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                <line x1="16" y1="2" x2="16" y2="6"></line>
+                <line x1="8" y1="2" x2="8" y2="6"></line>
+                <line x1="3" y1="10" x2="21" y2="10"></line>
+              </svg>
+              <span>22 Januari</span>
+            </div>
+
+            <p class="bday-sweet-note">"Terima kasih sudah terlahir ke dunia dan hadir menjadi pelindung terbaikku."</p>
+
+            <!-- Countdown Box -->
+            <div class="bday-countdown-box">
+              <span class="bday-countdown-label">Menuju Ulang Tahun Berikutnya:</span>
+              <div class="bday-timer-grid" id="timer-iam">
+                <div class="bday-timer-slot">
+                  <span class="bday-digit" id="iam-days">00</span>
+                  <span class="bday-unit">Hari</span>
+                </div>
+                <div class="bday-timer-slot">
+                  <span class="bday-digit" id="iam-hours">00</span>
+                  <span class="bday-unit">Jam</span>
+                </div>
+                <div class="bday-timer-slot">
+                  <span class="bday-digit" id="iam-minutes">00</span>
+                  <span class="bday-unit">Menit</span>
+                </div>
+                <div class="bday-timer-slot">
+                  <span class="bday-digit" id="iam-seconds">00</span>
+                  <span class="bday-unit">Detik</span>
+                </div>
+              </div>
+              <div class="bday-status-pill" id="iam-status">Menghitung hari spesial...</div>
+            </div>
+
+            <div class="bday-action-wrap">
+              <button type="button" class="btn-bday-wish btn-wish-iam" id="btn-wish-iam">
+                <span>Kirim Doa Manis 💫</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Middle Love Connector -->
+          <div class="birthdays-love-connector">
+            <div class="connector-line"></div>
+            <div class="connector-heart-badge">
+              <div class="connector-heart-pulse">💖</div>
+              <span class="connector-text">Dua Jiwa Satu Takdir</span>
+            </div>
+            <div class="connector-line"></div>
+          </div>
+
+          <!-- Card 2: Via (Tuan Putri) -->
+          <div class="birthday-card via-card reveal-on-scroll">
+            <div class="bday-card-header">
+              <div class="bday-role-tag tag-via">
+                <span class="role-icon">👧🏻</span>
+                <span>TUAN PUTRI • VIA</span>
+              </div>
+              <div class="bday-zodiac-tag">
+                <span>♏ Scorpio</span>
+              </div>
+            </div>
+
+            <div class="bday-avatar-wrap">
+              <div class="bday-avatar-glow via-glow"></div>
+              <div class="bday-avatar-frame">
+                <span class="bday-avatar-emoji">🌸</span>
+              </div>
+            </div>
+
+            <h3 class="bday-person-name">Via</h3>
+            <div class="bday-date-badge via-badge">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                <line x1="16" y1="2" x2="16" y2="6"></line>
+                <line x1="8" y1="2" x2="8" y2="6"></line>
+                <line x1="3" y1="10" x2="21" y2="10"></line>
+              </svg>
+              <span>30 Oktober</span>
+            </div>
+
+            <p class="bday-sweet-note">"Dunia menjadi berkali-kali lipat lebih indah sejak tanggal 30 Oktober menghadirkanmu."</p>
+
+            <!-- Countdown Box -->
+            <div class="bday-countdown-box">
+              <span class="bday-countdown-label">Menuju Ulang Tahun Berikutnya:</span>
+              <div class="bday-timer-grid" id="timer-via">
+                <div class="bday-timer-slot">
+                  <span class="bday-digit" id="via-days">00</span>
+                  <span class="bday-unit">Hari</span>
+                </div>
+                <div class="bday-timer-slot">
+                  <span class="bday-digit" id="via-hours">00</span>
+                  <span class="bday-unit">Jam</span>
+                </div>
+                <div class="bday-timer-slot">
+                  <span class="bday-digit" id="via-minutes">00</span>
+                  <span class="bday-unit">Menit</span>
+                </div>
+                <div class="bday-timer-slot">
+                  <span class="bday-digit" id="via-seconds">00</span>
+                  <span class="bday-unit">Detik</span>
+                </div>
+              </div>
+              <div class="bday-status-pill" id="via-status">Menghitung hari spesial...</div>
+            </div>
+
+            <div class="bday-action-wrap">
+              <button type="button" class="btn-bday-wish btn-wish-via" id="btn-wish-via">
+                <span>Kirim Peluk & Cium 💖</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Synchronous Immediate Birthday Countdown Runner -->
+    <script>
+      (function() {
+        function getNextBirthday(targetMonth, targetDay) {
+          var now = new Date();
+          var currentYear = now.getFullYear();
+          var isToday = (now.getMonth() === targetMonth && now.getDate() === targetDay);
+          var targetDate = new Date(currentYear, targetMonth, targetDay, 0, 0, 0, 0);
+
+          if (now.getTime() >= targetDate.getTime() && !isToday) {
+            targetDate = new Date(currentYear + 1, targetMonth, targetDay, 0, 0, 0, 0);
+          }
+
+          var diffMs = targetDate.getTime() - now.getTime();
+          return { diffMs: diffMs, isToday: isToday };
+        }
+
+        function updateCard(prefix, targetMonth, targetDay, personName, emoji) {
+          var elDays = document.getElementById(prefix + "-days");
+          var elHours = document.getElementById(prefix + "-hours");
+          var elMins = document.getElementById(prefix + "-minutes");
+          var elSecs = document.getElementById(prefix + "-seconds");
+          var elStatus = document.getElementById(prefix + "-status");
+
+          if (!elDays || !elHours || !elMins || !elSecs) return;
+
+          var data = getNextBirthday(targetMonth, targetDay);
+
+          if (data.isToday) {
+            elDays.textContent = "00";
+            elHours.textContent = "00";
+            elMins.textContent = "00";
+            elSecs.textContent = "00";
+            if (elStatus) {
+              elStatus.innerHTML = "🎉 <strong>HARI INI ULANG TAHUN!</strong> Selamat hari lahir " + personName + "! 🎂💖";
+              elStatus.classList.add("is-birthday-today");
+            }
+            return;
+          }
+
+          var remaining = Math.max(0, data.diffMs);
+          var totalSecs = Math.floor(remaining / 1000);
+          var days = Math.floor(totalSecs / 86400);
+          var hours = Math.floor((totalSecs % 86400) / 3600);
+          var minutes = Math.floor((totalSecs % 3600) / 60);
+          var seconds = totalSecs % 60;
+
+          var pad = function(n) { return (n < 10 ? "0" : "") + n; };
+
+          elDays.textContent = pad(days);
+          elHours.textContent = pad(hours);
+          elMins.textContent = pad(minutes);
+          elSecs.textContent = pad(seconds);
+
+          if (elStatus) {
+            elStatus.classList.remove("is-birthday-today");
+            if (days === 0) {
+              elStatus.innerHTML = "⏳ <strong>Kurang dari 24 jam lagi!</strong> Menghitung jam dan menit... 🎁✨";
+            } else {
+              elStatus.innerHTML = "✨ <strong>" + days + " hari lagi</strong> menuju hari istimewa " + personName + " " + emoji;
+            }
+          }
+        }
+
+        function runLiveCountdown() {
+          updateCard("iam", 0, 22, "Pangeran I'am", "👑");
+          updateCard("via", 9, 30, "Tuan Putri Via", "🌸");
+        }
+
+        // Execute immediately right now
+        runLiveCountdown();
+
+        if (window._liveBdayTimer) clearInterval(window._liveBdayTimer);
+        window._liveBdayTimer = setInterval(runLiveCountdown, 1000);
+        window.runLiveCountdown = runLiveCountdown;
+      })();
+    </script>
+
+    <!-- SECTION 4: OUR SONGS -->
+    <section id="songs" class="songs-section">
+      <div class="section-container">
+        <div class="section-heading-wrap">
+          <span class="section-kicker">The Soundtrack of Us</span>
+          <h2 class="section-title">OUR SONGS</h2>
+          <p class="section-subtitle">The melodies that echo our favorite drives, dances, and quiet evenings.</p>
+        </div>
+
+        <!-- Custom Music Player -->
+        <div class="player-wrapper">
+          <div class="player-main-card">
+            
+            <div class="player-top">
+              <!-- Spinning Vinyl / Album Art -->
+              <div class="player-cover-wrap">
+                <img id="player-song-cover" src="assets/images/song1-cover.jpg" alt="Song cover art" class="player-cover-img" />
+                <div class="cover-vinyl-ring"></div>
+              </div>
+
+              <!-- Track Metadata -->
+              <div class="player-meta-info">
+                <span class="player-now-playing">Now Playing</span>
+                <h3 id="player-song-title" class="player-title">Golden Hour Waltz</h3>
+                <h4 id="player-song-artist" class="player-artist">Acoustic Serenade</h4>
+                <p id="player-song-desc" class="player-description">The melody playing softly in the background when we first realized we were in love.</p>
+                
+                <!-- Equalizer Animation Bars -->
+                <div id="player-visualizer" class="player-visualizer">
+                  <span class="eq-bar bar-1"></span>
+                  <span class="eq-bar bar-2"></span>
+                  <span class="eq-bar bar-3"></span>
+                  <span class="eq-bar bar-4"></span>
+                  <span class="eq-bar bar-5"></span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Scrubber / Progress -->
+            <div class="player-progress-container">
+              <div class="progress-bar-wrap">
+                <input type="range" id="player-progress" min="0" max="100" value="0" class="player-progress-input" aria-label="Audio timeline" />
+                <div id="player-progress-filled" class="player-progress-filled"></div>
+              </div>
+              <div class="player-time-display">
+                <span id="player-current-time">00:00</span>
+                <span id="player-duration">00:00</span>
+              </div>
+            </div>
+
+            <!-- Controls (Play, Prev, Next, Volume) -->
+            <div class="player-controls-row">
+              <button id="player-prev-btn" class="player-btn control-secondary" aria-label="Previous song">
+                <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
+                  <path d="M6 6h2v12H6zm3.5 6l8.5 6V6z"/>
+                </svg>
+              </button>
+
+              <button id="player-play-btn" class="player-btn control-primary" aria-label="Play song">
+                <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor">
+                  <path d="M8 5v14l11-7z"></path>
+                </svg>
+              </button>
+
+              <button id="player-next-btn" class="player-btn control-secondary" aria-label="Next song">
+                <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
+                  <path d="M6 18l8.5-6L6 6v12zM16 6v12h2V6h-2z"/>
+                </svg>
+              </button>
+
+              <!-- Volume Control -->
+              <div class="player-volume-group">
+                <button id="player-mute-btn" class="player-btn volume-btn" aria-label="Toggle mute" data-muted="false">
+                  <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+                    <path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+                  </svg>
+                </button>
+                <input type="range" id="player-volume" min="0" max="1" step="0.05" value="0.75" class="player-volume-slider" aria-label="Volume slider" />
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Playlist Queue -->
+          <div class="player-playlist-card">
+            <h4 class="playlist-heading">Playlist Collection</h4>
+            <div id="player-playlist-container" class="playlist-list">
+              <!-- Rendered via js/songs.js -->
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+
+    <!-- SECTION 6: LETTER -->
+    <section id="letter" class="letter-section">
+      <div class="section-container">
+        <div class="section-heading-wrap">
+          <span class="section-kicker">From The Heart</span>
+          <h2 class="section-title">A LETTER FOR YOU</h2>
+          <p class="section-subtitle">Words written just for you, whenever you need a reminder of how cherished you are.</p>
+        </div>
+
+        <!-- Envelope Interactive Presentation -->
+        <div class="letter-stage">
+          <div id="letter-envelope-wrap" class="envelope-container">
+            
+            <div class="envelope-card">
+              <!-- Envelope Flap & Seal -->
+              <div class="envelope-top-flap"></div>
+              <div class="envelope-body-pocket">
+                <div class="envelope-emboss">
+                  <div class="envelope-seal-badge">
+                    <span class="seal-icon">💌</span>
+                  </div>
+                  <h3 class="envelope-label">A Letter For You</h3>
+                  <p class="envelope-prompt">Click to break the seal and read my heart.</p>
+                  
+                  <div class="envelope-action-wrap">
+                    <button id="btn-open-letter" class="btn-letter-open">
+                      <span>Open Letter</span>
+                    </button>
+                    <button id="btn-fold-letter" class="btn-letter-fold" style="display: none;">
+                      <span>Fold Letter</span>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Letter Paper Content (Easy to edit right here in HTML!) -->
+            <div id="letter-paper-content" class="letter-paper">
+              <div class="letter-paper-inner">
+                <div class="letter-date-stamp">A Love Note</div>
+                
+                <h3 class="letter-salutation">Dear You,</h3>
+
+                <!-- =====================================
+                     EDIT YOUR LETTER TEXT HERE
+                     ===================================== -->
+                <div class="letter-body-prose">
+                  <p>
+                    HAAIIIII VIIAAAA SAYANGGGKUUU, Makasiihhh yaaaa buaattt seemuuaaa yaanggg udaahh kamuu kassiiihhh keee akkuuuuu.
+                  </p>
+                  <p>
+                    Akuuu Sayaanggg Sayanngg Sayaanggg Banngeetttt saamaaa kaamuuu, Ciinnnnttaaaaaa bangeeettttt pokoknya saamaaa kamuuu.
+                  </p>
+                  <p>
+                    Akuuuu gaaa aakaannnn ninggalin kamu, bakal setiaa teruss saamaaa kamuuu, JANJII.
+                  </p>
+                  <p>
+                    Mau kamu bilang kamu jelek lah atau apa, AKUUU BAKAL NERIMA KAMU APA ADANYA, TETEP SAYANG SAMA KAMU💗
+                  </p>
+                  <p>
+                    💗 💗 💗 💗 💗 💗 💗💖 💖 💖 ❤️ ❤️
+                  </p>
+                </div>
+
+                <div class="letter-signoff">
+                  <p class="signoff-with">With all my love,</p>
+                  <p class="signoff-name">Forever Yours</p>
+                </div>
+                <!-- =====================================
+                     END OF EDITABLE LETTER TEXT
+                     ===================================== -->
+              </div>
+            </div>
+
+          </div>
+        <!-- SAVED LETTERS & LOVE MESSAGES (PERMANENTLY STORED) -->
+        <div class="saved-letters-wrapper" id="saved-messages">
+          <div class="saved-letters-header">
+            <div class="saved-letters-title-wrap">
+              <span class="saved-letters-kicker">
+                <span>💌</span>
+                <span>Arsip Surat & Pesan Kita</span>
+              </span>
+              <h3 class="saved-letters-title">Surat Cinta yang Tersimpan</h3>
+              <p class="saved-letters-subtitle">Semua pesan dan balasan cinta yang telah dibuat tersimpan permanen di website ini.</p>
+            </div>
+            <div class="saved-letters-actions">
+              <button type="button" class="btn-refresh-letters" id="btn-refresh-letters" title="Sinkronkan ulang dengan database cloud" aria-label="Sinkronkan data cloud">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21.5 2v6h-6M2.5 22v-6h6M2 11.5a10 10 0 0 1 18.8-4.3M22 12.5a10 10 0 0 1-18.8 4.2"/></svg>
+                <span>Sinkron</span>
+              </button>
+              <span class="badge-letters-count" id="badge-letters-count">
+                <span>📝</span>
+                <span id="letters-count-text">Memuat pesan...</span>
+              </span>
+              <a href="pesan.html" class="btn-write-letter">
+                <span>+ Tulis Pesan Baru</span>
+                <span>✨</span>
+              </a>
+            </div>
+          </div>
+
+          <!-- Letters Grid -->
+          <div class="saved-letters-grid" id="saved-letters-container">
+            <div class="saved-letters-empty">
+              <span class="saved-letters-empty-icon">📮</span>
+              <h4 class="saved-letters-empty-title">Belum Ada Pesan Tersimpan</h4>
+              <p class="saved-letters-empty-desc">Saat kamu menulis dan menekan Selesai di halaman surat cinta, pesanmu otomatis tersimpan aman di sini dan tidak akan pernah hilang.</p>
+              <a href="pesan.html" class="btn-write-letter">Tulis Pesan Cinta Pertama 💌</a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- =====================================
+         SKY LETTER INVITATION BANNER
+         ===================================== -->
+    <section class="sky-invite-section" style="padding: 48px 20px 20px; text-align: center;">
+      <div class="sky-invite-card" style="max-width: 660px; margin: 0 auto; background: linear-gradient(135deg, #e0f2fe 0%, #f0fdf4 100%); border: 1.5px solid #bae6fd; border-radius: 24px; padding: 36px 24px; box-shadow: 0 14px 35px rgba(2, 132, 199, 0.12);">
+        <span style="font-size: 2.2rem; display: block; margin-bottom: 8px;">☁️💌</span>
+        <h3 style="font-family: 'Playfair Display', Georgia, serif; font-size: 1.65rem; color: #0c4a6e; margin-bottom: 10px;">Ada Pesan Untukmu :3</h3>
+        <p style="color: #475569; font-size: 1rem; max-width: 480px; margin: 0 auto 24px; line-height: 1.6;">Sebuah kejutan kata hati yang ingin I'am sampaikan khusus untuk Via tercinta...</p>
+        <a href="pesan.html" style="display: inline-flex; align-items: center; gap: 10px; background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%); color: #fff; text-decoration: none; font-weight: 700; font-size: 1.02rem; padding: 13px 32px; border-radius: 9999px; box-shadow: 0 8px 22px rgba(2, 132, 199, 0.35); transition: transform 0.2s ease;">
+          <span>Buka 💌</span>
+          <span style="font-size: 1.15rem;">✨</span>
+        </a>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- =====================================
+       FULLSCREEN LIGHTBOX MODAL (FOR PHOTOS)
+       ===================================== -->
+  <div id="gallery-lightbox" class="lightbox-modal" role="dialog" aria-hidden="true" aria-label="Photo Lightbox">
+    <div class="lightbox-backdrop"></div>
+    <div class="lightbox-dialog">
+      <button id="lightbox-close" class="lightbox-btn-close" aria-label="Close photo view">✕</button>
+      
+      <button id="lightbox-prev" class="lightbox-nav-btn prev-btn" aria-label="Previous photo">‹</button>
+      <button id="lightbox-next" class="lightbox-nav-btn next-btn" aria-label="Next photo">›</button>
+
+      <div class="lightbox-content">
+        <div class="lightbox-media-frame">
+          <img id="lightbox-img" src="" alt="Enlarged memory" class="lightbox-image" />
+        </div>
+        <div class="lightbox-info">
+          <div class="lightbox-header-line">
+            <h3 id="lightbox-title" class="lightbox-title"></h3>
+            <span id="lightbox-date" class="lightbox-date"></span>
+          </div>
+          <p id="lightbox-caption" class="lightbox-caption"></p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- =====================================
+       RESPONSIVE VIDEO MODAL
+       ===================================== -->
+  <div id="video-modal" class="video-modal" role="dialog" aria-hidden="true" aria-label="Video Player Modal">
+    <div class="modal-backdrop"></div>
+    <div class="video-dialog">
+      <button id="video-modal-close" class="video-btn-close" aria-label="Close video player">✕</button>
+      <div class="video-player-wrap">
+        <video id="modal-video-element" controls preload="metadata" playsinline class="modal-video"></video>
+      </div>
+      <div class="video-modal-details">
+        <div class="video-modal-top">
+          <h3 id="video-modal-title" class="video-title"></h3>
+          <span id="video-modal-date" class="video-date"></span>
+        </div>
+        <p id="video-modal-desc" class="video-desc"></p>
+      </div>
+    </div>
+  </div>
+
+  <!-- =====================================
+       ROMANTIC FOOTER
+       ===================================== -->
+  <footer class="site-footer">
+    <div class="footer-container">
+      <div class="footer-decor-line" aria-hidden="true"></div>
+      <p class="footer-quote">“Our little story is still being written.”</p>
+      <p class="footer-copyright">
+        © <span id="current-year">2026</span> OUR LITTLE STORY
+      </p>
+    </div>
+  </footer>
+
+  <!-- =====================================
+       SCRIPTS (Loaded sequentially)
+       ===================================== -->
+  <script src="js/gallery.js?v=2.2"></script>
+  <script src="js/anniversary.js?v=2.2"></script>
+  <script src="js/songs.js?v=2.2"></script>
+  <script src="js/timeline.js?v=2.2"></script>
+  <script type="module" src="js/messages-store.js?v=7.0"></script>
+  <script src="js/main.js?v=7.0"></script>
+  <script>
+    // Global fallback triggers
+    if (typeof window.runLiveCountdown === 'function') {
+      window.runLiveCountdown();
+    }
+    if (typeof window.initBirthdays === 'function') {
+      window.initBirthdays();
+    }
+  </script>
+
+</body>
+</html>

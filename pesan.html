@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Surat Cinta untuk Viia </title>
+  <meta name="description" content="Sebuah pesan cinta tulus di bawah langit biru untuk Viia dari Yass." />
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,600&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="css/pesan.css?v=7.0" />
+
+  <!-- Native Browser Importmap for Firebase Web SDK (GitHub Pages & Static Compatible) -->
+  <script type="importmap">
+  {
+    "imports": {
+      "firebase/app": "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js",
+      "firebase/firestore": "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js"
+    }
+  }
+  </script>
+</head>
+<body>
+
+  <!-- Sky Canvas for Floating Hearts & Sparkles -->
+  <canvas id="sky-canvas"></canvas>
+
+  <!-- Ambient Cloud Gradient Layer -->
+  <div class="cloud-layer" aria-hidden="true"></div>
+
+  <!-- Header Navigation -->
+  <header class="sky-header">
+    <a href="index.html" class="back-btn" title="Kembali ke Halaman Utama">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M19 12H5M12 19l-7-7 7-7"/>
+      </svg>
+      <span>&lt;-Kembali</span>
+    </a>
+
+    <!-- Romantic Audio Player (Kita Lewati Berdua) -->
+    <div class="audio-control-pill" id="audio-toggle-btn" role="button" aria-label="Putar atau jeda musik latar" tabindex="0">
+      <div class="audio-wave-icon">
+        <span class="audio-wave-bar"></span>
+        <span class="audio-wave-bar"></span>
+        <span class="audio-wave-bar"></span>
+      </div>
+      <span class="audio-label" id="audio-status-text">Kita Lewati Berdua</span>
+    </div>
+  </header>
+
+  <!-- Hidden Audio Source -->
+  <audio id="pesan-audio" loop preload="auto">
+    <source src="assets/music/song.mp3" type="audio/mpeg" />
+  </audio>
+
+  <!-- Page Content Container (Cascading Flow) -->
+  <main class="page-container">
+
+    <div class="sky-intro">
+      <h1 class="sky-title">I Love You</h1>
+      <p class="sky-subtitle">Di dalam Hatiku ada Kamu, Viiaa...</p>
+    </div>
+
+    <!-- ======================================================================
+         LANGKAH 1: Suasana Pembuka & Kotak Teks Pertama
+         ====================================================================== -->
+    <section class="step-card step-visible" id="step-1-card">
+      <div class="step-1-content">
+        <p class="step-1-prompt">"Cobaa pencet tombol ini..."</p>
+        <div class="btn-row-right">
+          <button type="button" class="btn-sky-next" id="btn-step-1">
+            <span>InI..</span>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M5 12h14M12 5l7 7-7 7"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         LANGKAH 2: Kotak Pesan Cinta Tulus dari Yass (Muncul di Bawah Langkah 1)
+         ====================================================================== -->
+    <section class="step-card step-hidden" id="step-2-card">
+      <div class="letter-box">
+        <div class="letter-header">
+          <span class="letter-title">Pesan dari I'am/Yas untuk Via ❤️</span>
+        </div>
+        
+        <div class="letter-body">Haiii Viiaaaa Sayaangg kuuu, 
+Akuuu saayyaaannggg banngeeettt saamaaa kaamuuu, Akuu Ciinnttaaaaa banngeettt samaa kamuu🥰 🥰 . 
+Kalau akuuu adaa salah, Akuuu minntaaa maaff yaaa🙏 
+Maakkassiihh yaaaa buuaattt seemmuuaaaa yangg udahh kamuu berikan ke Aku❤️ 
+Akuuuu gaaa aakaannnn ninggalin kamu, bakal setiaa teruss saamaaa kamuuu, JAANNJJIIII.
+Kamuu jangann pernah merasa sendiri yaa, kann kamuu punyaa akuuu🤭 
+Akuu Bakall Nerima Kamuu Apa Adanya, mau kamu bilang kamu itu ga sempurna atau apa, akuu tetap bakal mauu samaa kamuu👉 👈 
+Aku Berharap kamuu jugaa nerima aku apa adanya, bakal tetep milih bertahan sama aku apapun yang terjadi. 
+Aku Takutt bangett kamuu ninggalin aku, takut kamu udah ga sayang aku lagi. 
+
+I Love You❤️ 
+From I'am/Yass</div>
+
+        <div class="btn-row-right">
+          <button type="button" class="btn-sky-next" id="btn-step-2">
+            <span>Next</span>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M5 12h14M12 5l7 7-7 7"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         LANGKAH 3: Animasi ❤️ Loop & Form Balas Pesan (Langkah 1 & 2 Tetap Terlihat)
+         ====================================================================== -->
+    <section class="step-card step-hidden" id="step-3-card">
+      <div class="step-3-content">
+
+        <!-- Looping Glowing Heart Animation -->
+        <div class="heart-loop-container">
+          <div class="heart-glow-ring"></div>
+          <svg class="heart-svg-loop" viewBox="0 0 24 24">
+            <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+          </svg>
+        </div>
+
+        <h2 class="heart-tagline">Detak Hati yang Selalu untukmu</h2>
+
+        <!-- Initial Trigger Button -->
+        <button type="button" class="btn-reply-trigger" id="btn-open-reply">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+          </svg>
+          <span>Balas Pesan</span>
+        </button>
+
+        <!-- Interactive Reply Form -->
+        <div class="reply-form-wrapper" id="reply-form-wrapper">
+          <div class="form-group">
+            <label class="form-label" for="input-dari">
+              <span>Dari:</span>
+            </label>
+            <input type="text" id="input-dari" class="form-input" value="Via" placeholder="Nama pengirim..." />
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="input-pesan">
+              <span>Pesanmu:</span>
+            </label>
+            <textarea id="input-pesan" class="form-textarea" placeholder="Tuliskan balasan isi hatimu untuk I'am/Yas di sini..."></textarea>
+            <span class="form-error-msg" id="pesan-error-msg" style="display: none; color: #e11d48; font-size: 0.85rem; font-weight: 600; margin-top: 4px;">Tuliskan pesan isi hatimu terlebih dahulu yaa sayang 🥰</span>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="input-singkat">
+              <span>Kata Kata Singkat:</span>
+            </label>
+            <input type="text" id="input-singkat" class="form-input" placeholder="Cth : I Love You to❤️" />
+          </div>
+
+          <button type="button" class="btn-selesai" id="btn-selesai">
+            <span>Selesai</span>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="20 6 9 17 4 12"/>
+            </svg>
+          </button>
+        </div>
+
+        <!-- Result Preview & Actions (Copy Only + Instructions) -->
+        <div class="reply-result-wrapper" id="reply-result-wrapper">
+          <div class="preview-box">
+            <div class="preview-title">Format Pesan Siap Dikirim:</div>
+            <pre class="preview-content" id="preview-content"></pre>
+          </div>
+
+          <!-- Petunjuk / Instruksi Pengiriman Pesan -->
+          <div class="copy-instruction-card">
+            <div class="instruction-header">
+              <span class="instruction-icon">💡</span>
+              <span class="instruction-title">Instruksi:</span>
+            </div>
+            <ol class="instruction-steps">
+              <li>Tekan tombol Copy Pesan di bawah.</li>
+              <li>Kirim ke Aku🥰</li>
+            </ol>
+          </div>
+
+          <!-- Status Tersimpan Permanen -->
+          <div class="saved-permanent-banner" style="background: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%); border: 1.5px solid #6ee7b7; border-radius: 18px; padding: 16px 20px; margin: 18px 0; text-align: left; box-shadow: 0 4px 15px rgba(16, 185, 129, 0.12);">
+            <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 6px;">
+              <span style="font-size: 1.3rem;">💖</span>
+              <strong style="color: #065f46; font-size: 0.98rem;">Tersimpan Permanen di Website!</strong>
+            </div>
+            <p style="color: #047857; font-size: 0.88rem; line-height: 1.5; margin: 0;">
+              Pesan ini otomatis tersimpan ke website dan cloud. Jika lupa copy atau langsung keluar, pesanmu <strong>tidak akan hilang</strong> dan langsung tampil di halaman utama (di bawah Surat Cinta).
+            </p>
+          </div>
+
+          <div class="action-buttons-row">
+            <!-- Copy Button -->
+            <button type="button" class="btn-copy-msg" id="btn-copy-msg">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
+                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+              </svg>
+              <span>Copy Pesan</span>
+            </button>
+
+            <!-- Go to Main Page Button -->
+            <a href="index.html#saved-messages" class="btn-view-main" style="display: inline-flex; align-items: center; justify-content: center; gap: 8px; background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%); color: #fff; text-decoration: none; padding: 12px 20px; border-radius: 9999px; font-weight: 600; font-size: 0.92rem; box-shadow: 0 4px 14px rgba(2, 132, 199, 0.25); text-align: center;">
+              <span>Lihat di Halaman Utama</span>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M5 12h14M12 5l7 7-7 7"/>
+              </svg>
+            </a>
+          </div>
+
+          <button type="button" class="btn-edit-again" id="btn-edit-again">
+            Edit pesan kembali
+          </button>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Toast Notification -->
+  <div class="sky-toast" id="sky-toast" role="status" aria-live="polite">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#38bdf8" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+      <polyline points="22 4 12 14.01 9 11.01"/>
+    </svg>
+    <span id="toast-text">Pesan berhasil disalin!</span>
+  </div>
+
+  <!-- JavaScript Modules -->
+  <script type="module" src="js/messages-store.js?v=7.0"></script>
+  <script src="js/pesan.js?v=7.0"></script>
+</body>
+</html>

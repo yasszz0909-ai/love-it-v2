@@ -1,0 +1,24 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function isValidMessage(data) {
+      return data.keys().hasAll(['sender', 'content', 'createdAt'])
+        && data.sender is string && data.sender.size() > 0 && data.sender.size() <= 100
+        && data.content is string && data.content.size() > 0 && data.content.size() <= 5000
+        && data.createdAt is string
+        && (!('recipient' in data) || (data.recipient is string && data.recipient.size() <= 100))
+        && (!('category' in data) || (data.category is string && data.category.size() <= 100))
+        && (!('singkat' in data) || (data.singkat is string && data.singkat.size() <= 200));
+    }
+
+    match /messages/{messageId} {
+      allow read: if true;
+      allow create, update: if isValidMessage(request.resource.data);
+      allow delete: if true;
+    }
+
+    match /test/connection {
+      allow read: if true;
+    }
+  }
+}
